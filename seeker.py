@@ -322,7 +322,7 @@ def wait():
     print("info sent flag - ",info_sent)
     while True:
         sleep(2)
-        print("info sent flag - ",info_sent)
+        #print("info sent flag - ",info_sent)
         current_info_mtime = path.getmtime(INFO) if path.exists(INFO) else 0
        
         size = path.getsize(RESULT)
