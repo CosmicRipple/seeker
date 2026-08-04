@@ -88,7 +88,7 @@ def discord_sender(url, msg_type, content):
                         {
                             "name": "ISP",
                             "value": json_content['isp']
-                        }
+                        },
                         {
                             "name": "latitude",
                             "value": json_content['latitude']
@@ -96,7 +96,7 @@ def discord_sender(url, msg_type, content):
                         {
                             "name": "longitude",
                             "value": json_content['longitude']
-                        }
+                        },
                     ]
                 }
             ]
