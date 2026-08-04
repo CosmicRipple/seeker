@@ -316,8 +316,12 @@ def wait():
     while True:
         sleep(2)
         size = path.getsize(RESULT)
+        size2 = path.getsize(INFO)
         if size == 0 and printed is False:
             utils.print(f'{G}[+] {C}Waiting for Client...{Y}[ctrl+c to exit]{W}\n')
+            printed = True
+        if size == 0 and size2 > 0 and printed is False:
+            data_parser()
             printed = True
         if size > 0:
             data_parser()
