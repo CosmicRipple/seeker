@@ -316,7 +316,7 @@ def server():
 def wait():
     global info_sent
     printed = False
-    #print("printed initial- " , printed)
+    print("printed at wait - " , printed)
     info_flag = False
     while True:
         sleep(2)
@@ -324,14 +324,12 @@ def wait():
         print("RESULT size - " , size)
         size2 = path.getsize(INFO)
         print("INFO  size -" , size2)
-        print("printed now - " , printed)
-        print("condition 1  -" , size == 0 and printed is False)
-        print("condition 2  - " , size == 0 and size2 > 0 and info_flag is False and printed is True)
-        print("condition 3  - " , size > 0)
         if size == 0 and printed is False:
             utils.print(f'{G}[+] {C}Waiting for Client...{Y}[ctrl+c to exit]{W}\n')
             printed = True
         if size > 0 or size2 > 0:
+            print("Size-",size)
+            print("Size 2-",size2)
             data_parser()
             printed = False
 
