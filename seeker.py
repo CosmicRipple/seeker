@@ -153,6 +153,7 @@ def banner():
 
 
 def send_webhook(content, msg_type):
+    #print(" content- " , content)
     if webhook is not None:
         if not webhook.lower().startswith('http://') and not webhook.lower().startswith(
             'https://'
@@ -313,6 +314,7 @@ def server():
 
 
 def wait():
+    global info_sent
     printed = False
     #print("printed initial- " , printed)
     info_flag = False
@@ -341,6 +343,7 @@ def wait():
 
 
 def data_parser():
+    global info_sent
     data_row = []
     with open(INFO, 'r') as info_file:
         info_content = info_file.read()
