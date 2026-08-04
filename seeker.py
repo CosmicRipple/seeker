@@ -331,13 +331,7 @@ def wait():
         if size == 0 and printed is False:
             utils.print(f'{G}[+] {C}Waiting for Client...{Y}[ctrl+c to exit]{W}\n')
             printed = True
-        if size == 0 and size2 > 0 and info_flag is False and printed is True:
-            print("info grabbed ")
-            data_parser()
-            utils.print(f'{G}[+] {C}grabbed INFO...{Y}[ctrl+c to exit]{W}\n')
-            info_flag = True
-            printed = False
-        if size > 0:
+        if size > 0 or size2 > 0:
             data_parser()
             printed = False
 
