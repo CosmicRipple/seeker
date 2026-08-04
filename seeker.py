@@ -343,7 +343,7 @@ def wait():
         if current_info_mtime != last_info_mtime:
             print("info.txt modification time changed")
             data_parser()
-            printer = False
+            printed = False
             last_info_mtime = current_info_mtime
 
 
